@@ -57,3 +57,8 @@ peonías (3:4). Siempre sin texto legible, sin logotipos y sin personas reconoci
 - Volver a la caja centrada con tarjetas blancas, a las esquinas redondeadas o a las fotos en arco o círculo.
 - Usar negrita en los titulares (rompe la serif fina) o fuentes externas.
 - Precios, cifras u opiniones fijos en los componentes: todo sale de `site.yaml`.
+
+## Páginas propias (fichas)
+Con la misma piel que la portada: cabecera y pie de la plantilla, migas (Inicio › Sección › Elemento), hero con la foto del
+elemento (sin foto, su icono), `detalle` en párrafos, tabla de datos, caja de contacto, galería (`imagenes`) y otros elementos
+de la misma lista.

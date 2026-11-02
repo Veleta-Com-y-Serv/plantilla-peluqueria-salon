@@ -58,17 +58,85 @@ secciones:
     nota: "Precios con IVA incluido. El diagnóstico y la prueba de color son gratis."
     cta: { texto: Reserva tu cita, url: "/#reserva" }
     servicios:
-      - { nombre: Corte y peinado, texto: "Lavado, corte a tijera y secado con forma.", precio: "28 €", duracion: 45 min, categoria: Corte, destacado: false }
+      - nombre: Corte y peinado
+        texto: "Lavado, corte a tijera y secado con forma."
+        precio: "28 €"
+        duracion: 45 min
+        categoria: Corte
+        destacado: false
+        imagenes: "/fotos/trabajo-corte.jpg"
+        detalle: |
+          Empezamos con una charla corta: cómo llevas el pelo a diario, cuánto tiempo le dedicas por la mañana y qué te gusta y qué no de tu corte actual. Con eso y mirando cómo cae tu pelo, la estilista te propone la forma que mejor te va y te explica por qué.
+
+          Después viene el lavado con masaje suave y el corte a tijera, que respeta la caída natural y se adapta a tu cabello, sea fino, grueso, liso u ondulado. Cortamos en seco las zonas que lo piden para ver el resultado real, sin sorpresas al secarlo.
+
+          El secado con forma está incluido: te dejamos el pelo peinado como lo podrás repetir en casa, y te enseñamos el gesto y el producto justo si quieres. Es un servicio pensado para mantener el corte en su sitio, para empezar de cero o para cambiar de estilo con calma.
+
+          Si vienes por primera vez, avísanos al reservar y nos organizamos para que tengas tiempo de sobra.
       - { nombre: Corte de flequillo, texto: "Entre corte y corte, para que no te tape los ojos.", precio: "8 €", duracion: 15 min, categoria: Corte, destacado: false }
       - { nombre: Corte infantil, texto: "Hasta 12 años, con paciencia y sin prisas.", precio: "14 €", duracion: 30 min, categoria: Corte, destacado: false }
-      - { nombre: Tinte de raíz, texto: "Color sin amoniaco en la raíz y brillo en largos.", precio: "38 €", duracion: 1 h 15 min, categoria: Color, destacado: false }
-      - { nombre: Balayage, texto: "Mechas pintadas a mano para un aclarado natural.", precio: "desde 95 €", duracion: 3 h, categoria: Color, destacado: true }
+      - nombre: Tinte de raíz
+        texto: "Color sin amoniaco en la raíz y brillo en largos."
+        precio: "38 €"
+        duracion: 1 h 15 min
+        categoria: Color
+        destacado: false
+        detalle: |
+          Para quien quiere disimular las canas o igualar la raíz con el resto del color sin cambiar de aspecto. Antes de mezclar nada miramos tu pelo con luz natural y, si hace falta, hacemos una prueba de color gratis para que el tono sea exactamente el que buscas.
+
+          Usamos color sin amoniaco, con un olor suave y que cuida el cuero cabelludo. Lo aplicamos solo en la raíz, con pincel y por secciones, para que la cobertura sea uniforme y no se note la línea de crecimiento. Después de dejarlo actuar, repasamos los largos con un baño de brillo que devuelve la luz al cabello.
+
+          Este servicio funciona bien como mantenimiento cada cierto tiempo, y es la base de muchos colores que luego se completan con un matiz. Te decimos cuánto suele aguantar en tu caso y cuándo conviene volver.
+
+          Terminamos con lavado, mascarilla y secado, y te recomendamos el champú que mejor conserva el tono.
+      - nombre: Balayage
+        texto: "Mechas pintadas a mano para un aclarado natural."
+        precio: "desde 95 €"
+        duracion: 3 h
+        categoria: Color
+        destacado: true
+        imagenes: "/fotos/trabajo-balayage.jpg; /fotos/trabajo-color.jpg"
+        detalle: |
+          El balayage es una técnica de color hecha a mano alzada: la colorista pinta las mechas directamente sobre el pelo, sin papel de aluminio, para conseguir un aclarado gradual que parece dado por el sol. Por eso cada resultado es distinto y no hay dos iguales.
+
+          La sesión empieza con un diagnóstico: partimos de tu color natural, de si hay tintes anteriores y del tono al que quieres llegar. Te enseñamos referencias y acordamos hasta dónde aclarar, porque no siempre es buena idea hacerlo todo en una sola sesión si el pelo está castigado.
+
+          Después se pintan las mechas por zonas, se deja actuar vigilando el punto de cada una y se termina con un matiz que fija el tono y cierra la cutícula. Incluye lavado, tratamiento y secado.
+
+          Lo mejor es que crece sin marcar raíz, así que puedes espaciar las visitas. El precio parte de la cifra indicada y depende del largo y de la densidad de tu pelo; te lo confirmamos antes de empezar.
       - { nombre: Mechas babylights, texto: "Mechas muy finas que dan luz sin que se note el cambio.", precio: "desde 80 €", duracion: 2 h 30 min, categoria: Color, destacado: false }
       - { nombre: Matiz y brillo, texto: "Quita el tono amarillo o cobrizo y devuelve el brillo.", precio: "22 €", duracion: 30 min, categoria: Color, destacado: false }
-      - { nombre: Peinado de evento, texto: "Recogido, semirrecogido u ondas para bodas y fiestas.", precio: "desde 45 €", duracion: 1 h, categoria: Peinado, destacado: true }
+      - nombre: Peinado de evento
+        texto: "Recogido, semirrecogido u ondas para bodas y fiestas."
+        precio: "desde 45 €"
+        duracion: 1 h
+        categoria: Peinado
+        destacado: true
+        imagenes: "/fotos/trabajo-recogido.jpg; /fotos/trabajo-ondas.jpg"
+        detalle: |
+          Para bodas, comuniones, bautizos, cenas de empresa o cualquier fiesta en la que quieres ir perfecta de la primera a la última hora. Peinamos recogidos, semirrecogidos, ondas suaves o melenas con volumen, siempre pensando en el vestido, el escote y el tipo de evento.
+
+          Lo ideal es traer una foto de lo que te gusta y, si puedes, una imagen del vestido. Con eso la estilista te dice qué es posible con tu largo y tu tipo de pelo, y ajusta la propuesta para que aguante bien durante horas, con la fijación justa para que no quede rígido.
+
+          Si el evento es importante, te recomendamos hacer antes una prueba: así llegas ese día sabiendo ya qué te vas a encontrar. Para las novias, la prueba de novia incluye también el maquillaje.
+
+          Cuando reserves, dinos la hora a la que tienes que estar lista y el lugar, y organizamos el horario con margen. Atendemos también a madrinas, invitadas y acompañantes en el mismo turno.
       - { nombre: Ondas al agua, texto: "Secado con forma y ondas marcadas con tenacilla.", precio: "25 €", duracion: 40 min, categoria: Peinado, destacado: false }
       - { nombre: Prueba de novia, texto: "Probamos peinado y maquillaje semanas antes del día.", precio: "60 €", duracion: 1 h 30 min, categoria: Peinado, destacado: false }
-      - { nombre: Alisado de keratina, texto: "Menos encrespado y secados más rápidos durante meses.", precio: "desde 120 €", duracion: 2 h 30 min, categoria: Tratamiento, destacado: false }
+      - nombre: Alisado de keratina
+        texto: "Menos encrespado y secados más rápidos durante meses."
+        precio: "desde 120 €"
+        duracion: 2 h 30 min
+        categoria: Tratamiento
+        destacado: false
+        detalle: |
+          Es un tratamiento alisador que no busca dejar el pelo como una tabla, sino reducir el encrespado y facilitar el peinado, con un acabado liso, suave y con brillo. Es ideal si tu pelo se encrespa con la humedad o si pierdes mucho tiempo con el secador cada mañana.
+
+          Primero hacemos un lavado profundo para abrir la cutícula y que el producto penetre bien. Después aplicamos la keratina por mechones, de raíz a puntas, y la sellamos con calor para fijarla en la fibra del cabello. El resultado se nota desde el primer secado.
+
+          Los primeros días tienes que cuidar el pelo con unas pautas sencillas que te damos por escrito, y conviene usar champús sin sulfatos para alargar el efecto. Con el tiempo el pelo recupera poco a poco su forma natural, sin cortes bruscos ni marcas.
+
+          El precio parte de la cifra indicada y depende del largo y del grosor de tu cabello. Antes de empezar revisamos su estado para decirte si es el momento adecuado o si conviene hidratarlo primero.
       - { nombre: Ritual de hidratación, texto: "Mascarilla, masaje craneal y sellado del cabello.", precio: "30 €", duracion: 40 min, categoria: Tratamiento, destacado: false }
       - { nombre: Manicura semipermanente, texto: "Limado, cutículas y esmalte que dura dos o tres semanas.", precio: "22 €", duracion: 45 min, categoria: Tratamiento, destacado: false }
       - { nombre: Maquillaje de evento, texto: "Piel cuidada, larga duración y acabado natural.", precio: "40 €", duracion: 50 min, categoria: Tratamiento, destacado: false }
