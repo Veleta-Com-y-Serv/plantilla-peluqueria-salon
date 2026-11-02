@@ -1,0 +1,99 @@
+---
+// Formulario sin servidor: si hay email en site.yaml abre el programa de correo (mailto) con los campos en el cuerpo.
+// Si no hay email, se queda como muestra y lo avisa. Para un envío real, cambia `action` por el de tu proveedor.
+// Campos: nombre, teléfono, email, «Servicio» (nombres de servicios.servicios; no sale si no hay ninguno) y mensaje.
+// Con `reserva`, además: estilista (`estilistas`, de equipo.personas; no sale si no hay), fecha preferida y franja
+// horaria (`franjas`, de reserva.franjas; no sale si no hay), y el mensaje pasa a ser «Algo que debamos saber».
+// `prefijo` hace únicos los ids si hay más de un formulario en la página.
+import { site, intereses } from '../../data/site';
+interface Props { boton?: string; class?: string; asunto?: string; prefijo?: string; reserva?: boolean; estilistas?: string[]; franjas?: string[] }
+const {
+  boton = 'Enviar',
+  class: clase = '',
+  reserva = false,
+  estilistas = [],
+  franjas = [],
+  asunto = reserva ? `Reserva desde la web de ${site.nombre}` : `Información desde la web de ${site.nombre}`,
+  prefijo = 'f',
+} = Astro.props;
+const email = site.contacto.email;
+const accion = email ? `mailto:${email}?subject=${encodeURIComponent(asunto)}` : '';
+const opciones = intereses();
+const id = (campo: string) => `${prefijo}-${campo}`;
+---
+
+<form class:list={['formulario', clase]} action={accion || undefined} method="post" enctype="text/plain">
+  <div class="campo">
+    <label for={id('nombre')}>Nombre</label>
+    <input id={id('nombre')} name="nombre" type="text" autocomplete="name" required />
+  </div>
+  <div class="campo-doble">
+    <div class="campo">
+      <label for={id('telefono')}>Teléfono</label>
+      <input id={id('telefono')} name="telefono" type="tel" autocomplete="tel" inputmode="tel" required />
+    </div>
+    <div class="campo">
+      <label for={id('email')}>Email</label>
+      <input id={id('email')} name="email" type="email" autocomplete="email" />
+    </div>
+  </div>
+  {
+    (opciones.length > 0 || (reserva && estilistas.length > 0)) && (
+      <div class="campo-doble">
+        {opciones.length > 0 && (
+          <div class="campo">
+            <label for={id('servicio')}>Servicio</label>
+            <select id={id('servicio')} name="servicio">
+              {reserva && <option value="">Aún no lo sé: diagnóstico</option>}
+              {opciones.map((o) => <option value={o}>{o}</option>)}
+            </select>
+          </div>
+        )}
+        {reserva && estilistas.length > 0 && (
+          <div class="campo">
+            <label for={id('estilista')}>Estilista</label>
+            <select id={id('estilista')} name="estilista">
+              <option value="">Me da igual</option>
+              {estilistas.map((e) => <option value={e}>{e}</option>)}
+            </select>
+          </div>
+        )}
+      </div>
+    )
+  }
+  {
+    reserva && (
+      <div class="campo-doble">
+        <div class="campo">
+          <label for={id('fecha')}>Fecha preferida</label>
+          <input id={id('fecha')} name="fecha_preferida" type="date" />
+        </div>
+        {franjas.length > 0 && (
+          <div class="campo">
+            <label for={id('franja')}>Franja horaria</label>
+            <select id={id('franja')} name="franja_horaria">
+              <option value="">Cualquiera</option>
+              {franjas.map((f) => <option value={f}>{f}</option>)}
+            </select>
+          </div>
+        )}
+      </div>
+    )
+  }
+  <div class="campo">
+    <label for={id('mensaje')}>{reserva ? 'Algo que debamos saber' : 'Mensaje'}</label>
+    <textarea id={id('mensaje')} name={reserva ? 'comentario' : 'mensaje'} rows="3"></textarea>
+  </div>
+  <label class="campo-check">
+    <input type="checkbox" name="privacidad" required />
+    <span>He leído el <a href="/aviso-legal">aviso legal y la política de privacidad</a>.</span>
+  </label>
+  <button type="submit" class="btn">{boton}</button>
+  <p class="formulario-aviso">
+    {
+      email
+        ? 'Al enviar se abre tu programa de correo con el mensaje listo.'
+        : 'Formulario de muestra: todavía no envía mensajes. Usa el teléfono o el email de contacto.'
+    }
+  </p>
+</form>

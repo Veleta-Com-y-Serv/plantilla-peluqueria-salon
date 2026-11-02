@@ -1,0 +1,100 @@
+---
+// Carta de servicios sobre banda marfil, partida a sangre: a la izquierda la foto (`imagen`, opcional) toca el borde
+// de la ventana y se queda fija al bajar (en escritorio), con el marco dorado fino; a la derecha, titular, texto y la
+// carta `servicios: [{nombre, texto, precio, duracion, categoria, destacado}]` agrupada por `categoria` (Corte, Color,
+// Peinado, Tratamiento…), en dos columnas en pantallas grandes. Cada fila: nombre en serif y precio a la derecha;
+// debajo, texto y duración. `destacado: true` = «Favorito» en dorado. Precio vacío = no se pinta. `nota` y `cta` opcionales.
+import { seccion, porCategoria } from '../../data/site';
+import { altSeccion } from '../../lib/seo';
+import Imagen from '../ui/Imagen.astro';
+import Titular from '../ui/Titular.astro';
+interface Props { id: string }
+const s = seccion(Astro.props.id);
+const grupos = s ? porCategoria(s.servicios) : [];
+---
+
+{
+  s && (
+    <section id={Astro.props.id} class:list={['servicios banda-marfil', { 'servicios--foto': !!s.imagen }]}>
+      {s.imagen && (
+        <div class="servicios-foto">
+          <div class="servicios-foto-fija marco">
+            <Imagen src={s.imagen} alt={altSeccion(s)} ancho={1100} alto={1400} class="h-full w-full object-cover" />
+          </div>
+        </div>
+      )}
+      <div class="servicios-cuerpo">
+        <Titular antetitulo={s.antetitulo} titulo={s.titulo} texto={s.texto} />
+        {grupos.length > 0 && (
+          <div class="servicios-grupos">
+            {grupos.map((g) => (
+              <div class="servicios-grupo">
+                {g.categoria && (
+                  <h3 class="servicios-categoria">
+                    <span>{g.categoria}</span>
+                    <span class="servicios-cuenta" aria-hidden="true">{String(g.servicios.length).padStart(2, '0')}</span>
+                  </h3>
+                )}
+                <ul>
+                  {g.servicios.map((x) => (
+                    <li class="servicio">
+                      <p class="servicio-fila">
+                        <span class="servicio-nombre">{x.nombre}</span>
+                        {x.precio && <span class="servicio-precio">{x.precio}</span>}
+                      </p>
+                      {(x.texto || x.duracion || x.destacado === true) && (
+                        <p class="servicio-texto">
+                          {x.destacado === true && <span class="servicio-favorito">Favorito</span>}
+                          {x.texto}
+                          {x.duracion && <span class="servicio-duracion">{x.duracion}</span>}
+                        </p>
+                      )}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ))}
+          </div>
+        )}
+        {(s.nota || s.cta) && (
+          <div class="servicios-pie">
+            {s.nota && <p class="max-w-xl text-sm opacity-75">{s.nota}</p>}
+            {s.cta && <p class="shrink-0"><a class="btn" href={s.cta.url}>{s.cta.texto}</a></p>}
+          </div>
+        )}
+      </div>
+    </section>
+  )
+}
+
+<style>
+  .servicios { display: grid; grid-template-columns: minmax(0, 1fr); }
+  .servicios-foto-fija { height: 78vw; max-height: 34rem; }
+  .servicios-cuerpo { width: 100%; max-width: var(--ancho); margin-inline: auto; padding: var(--ritmo) 1rem; }
+  .servicios-grupos { display: grid; gap: 3rem; }
+  .servicios-categoria { display: flex; align-items: baseline; justify-content: space-between; gap: 1rem; padding-bottom: .9rem; border-bottom: 1px solid var(--resalte); font-size: clamp(2rem, 4vw, 2.75rem); font-style: italic; }
+  .servicios-cuenta { font-family: var(--fuente-texto); font-style: normal; font-size: .7rem; font-weight: 600; letter-spacing: .28em; color: var(--resalte); }
+  .servicio { padding-block: 1.1rem; border-bottom: 1px solid var(--linea); }
+  .servicio-fila { display: flex; align-items: baseline; justify-content: space-between; gap: 1rem; }
+  .servicio-nombre { font-family: var(--fuente-titulos); font-size: 1.35rem; line-height: 1.15; }
+  .servicio-precio { flex-shrink: 0; font-size: .95rem; font-weight: 600; letter-spacing: .04em; color: var(--resalte); white-space: nowrap; }
+  .servicio-texto { margin-top: .35rem; font-size: .95rem; opacity: .75; }
+  .servicio-favorito { display: inline-block; margin-right: .6rem; font-size: .62rem; font-weight: 700; letter-spacing: .26em; text-transform: uppercase; color: var(--resalte); vertical-align: .12em; }
+  .servicio-duracion { display: inline-block; margin-left: .6rem; font-size: .66rem; font-weight: 600; letter-spacing: .2em; text-transform: uppercase; opacity: .85; white-space: nowrap; }
+  .servicio-duracion::before { content: "· "; }
+  .servicios-pie { margin-top: 3.5rem; display: flex; flex-direction: column; gap: 1.5rem; }
+  @media (min-width: 768px) {
+    .servicios-cuerpo { padding: var(--ritmo-md) 2rem; }
+    .servicios-pie { flex-direction: row; align-items: center; justify-content: space-between; }
+  }
+  @media (min-width: 1024px) {
+    .servicios--foto { grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); }
+    .servicios-foto { position: relative; }
+    .servicios-foto-fija { position: sticky; top: 0; height: 100svh; max-height: none; }
+    .servicios--foto .servicios-cuerpo { max-width: none; margin: 0; padding-left: 4.5rem; padding-right: max(2rem, calc((100vw - var(--ancho)) / 2 + 2rem)); }
+  }
+  @media (min-width: 1280px) {
+    .servicios-grupos { grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: 4rem; row-gap: 3.5rem; }
+    .servicios:not(.servicios--foto) .servicios-grupos { grid-template-columns: repeat(auto-fit, minmax(18rem, 1fr)); }
+  }
+</style>

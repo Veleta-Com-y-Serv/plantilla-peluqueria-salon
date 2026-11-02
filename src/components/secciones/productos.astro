@@ -1,0 +1,43 @@
+---
+// Marcas que usamos sobre banda marfil: titular centrado y, debajo, los nombres de las marcas
+// (`items: [{titulo, texto}]`) en serif enorme, uno tras otro como una portada de revista, separados por rombos
+// dorados; bajo cada nombre, su `texto` en mayúsculas pequeñas (qué es). `cta` opcional. Sin items, solo el titular.
+import { seccion } from '../../data/site';
+import Titular from '../ui/Titular.astro';
+interface Props { id: string }
+const s = seccion(Astro.props.id);
+const marcas = s ? s.items.filter((it) => it && it.titulo) : [];
+---
+
+{
+  s && (
+    <section id={Astro.props.id} class="seccion banda-marfil">
+      <div class="contenedor">
+        <Titular antetitulo={s.antetitulo} titulo={s.titulo} texto={s.texto} alinear="centro" />
+        {marcas.length > 0 && (
+          <ul class="marcas">
+            {marcas.map((m) => (
+              <li class="marca-item">
+                <span class="marca-nombre-grande">{m.titulo}</span>
+                {m.texto && <span class="etiqueta-mayus marca-texto">{m.texto}</span>}
+              </li>
+            ))}
+          </ul>
+        )}
+        {s.cta && <p class="mt-14 text-center"><a class="btn" href={s.cta.url}>{s.cta.texto}</a></p>}
+      </div>
+    </section>
+  )
+}
+
+<style>
+  .marcas { display: flex; flex-wrap: wrap; justify-content: center; align-items: flex-start; gap: 2.25rem 0; padding-block: 2.5rem; border-block: 1px solid var(--resalte); }
+  .marca-item { display: flex; flex-direction: column; align-items: center; text-align: center; padding-inline: 1.25rem; position: relative; max-width: 100%; }
+  .marca-nombre-grande { font-family: var(--fuente-titulos); font-size: clamp(2rem, 5.5vw, 4.25rem); line-height: 1; letter-spacing: -0.01em; overflow-wrap: anywhere; }
+  .marca-item:nth-child(even) .marca-nombre-grande { font-style: italic; }
+  .marca-texto { margin-top: .7rem; color: var(--resalte); }
+  @media (min-width: 768px) {
+    .marca-item { padding-inline: 2.25rem; }
+    .marca-item + .marca-item::before { content: ""; position: absolute; left: -.2rem; top: 1.6rem; width: .4rem; height: .4rem; background: var(--resalte); transform: rotate(45deg); }
+  }
+</style>

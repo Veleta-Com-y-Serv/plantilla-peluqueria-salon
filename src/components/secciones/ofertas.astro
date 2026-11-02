@@ -1,0 +1,52 @@
+---
+// Promociones sobre banda negra: titular y texto; debajo, cada promoción (`ofertas: [{titulo, texto, precio, validez}]`)
+// es una fila a todo el ancho del contenido, separada por filetes dorados: número, título en serif con su texto,
+// validez en mayúsculas y el precio enorme en rosa a la derecha. En móvil, una ficha bajo otra. `cta` opcional.
+// Precio vacío = no se pinta. Sin promociones, solo el titular.
+import { seccion } from '../../data/site';
+import Titular from '../ui/Titular.astro';
+interface Props { id: string }
+const s = seccion(Astro.props.id);
+const ofertas = s ? s.ofertas : [];
+---
+
+{
+  s && (
+    <section id={Astro.props.id} class="seccion banda-negra">
+      <div class="contenedor">
+        <Titular antetitulo={s.antetitulo} titulo={s.titulo} texto={s.texto} />
+        {ofertas.length > 0 && (
+          <ol class="ofertas">
+            {ofertas.map((o, i) => (
+              <li class="oferta">
+                <span class="oferta-n" aria-hidden="true">{String(i + 1).padStart(2, '0')}</span>
+                <div class="min-w-0">
+                  <h3 class="oferta-titulo">{o.titulo}</h3>
+                  {o.texto && <p class="mt-2 max-w-2xl opacity-75">{o.texto}</p>}
+                </div>
+                {o.validez && <p class="etiqueta-mayus resalte oferta-validez">{o.validez}</p>}
+                {o.precio && <p class="oferta-precio">{o.precio}</p>}
+              </li>
+            ))}
+          </ol>
+        )}
+        {s.cta && <p class="mt-12"><a class="btn" href={s.cta.url}>{s.cta.texto}</a></p>}
+      </div>
+    </section>
+  )
+}
+
+<style>
+  .ofertas { border-top: 1px solid color-mix(in srgb, var(--oro) 55%, transparent); }
+  .oferta { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: .5rem 1.25rem; padding-block: 2rem; border-bottom: 1px solid color-mix(in srgb, var(--oro) 55%, transparent); }
+  .oferta-n { grid-row: span 3; font-size: .72rem; font-weight: 600; letter-spacing: .28em; color: var(--resalte); padding-top: .9rem; }
+  .oferta-titulo { font-size: clamp(2rem, 4.2vw, 3.5rem); line-height: 1.02; }
+  .oferta-validez { margin-top: .5rem; }
+  .oferta-precio { font-family: var(--fuente-titulos); font-style: italic; font-size: clamp(2.2rem, 5vw, 4.25rem); line-height: 1; color: var(--c-primario); }
+  @media (min-width: 900px) {
+    .oferta { grid-template-columns: 4rem minmax(0, 1fr) 13rem auto; align-items: center; gap: 2.5rem; padding-block: 2.5rem; }
+    .oferta-n { grid-row: auto; padding-top: 0; }
+    .oferta-validez { margin-top: 0; }
+    .oferta-precio { text-align: right; white-space: nowrap; }
+  }
+</style>

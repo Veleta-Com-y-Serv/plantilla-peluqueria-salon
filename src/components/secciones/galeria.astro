@@ -1,0 +1,49 @@
+---
+// Trabajos: banda rosa con el titular (a la izquierda) y el botón `cta` (p. ej. a Instagram) a la derecha; debajo,
+// `galeria: [ruta…]` en mosaico de borde a borde sin márgenes ni huecos: en escritorio cuatro columnas con fotos altas
+// y bajas alternas (la 1.ª y la 6.ª ocupan dos filas), en móvil dos columnas. La foto se aclara al pasar por encima.
+// Sin fotos, solo el titular.
+import { seccion } from '../../data/site';
+import { altGaleria } from '../../lib/seo';
+import Imagen from '../ui/Imagen.astro';
+import Titular from '../ui/Titular.astro';
+interface Props { id: string }
+const s = seccion(Astro.props.id);
+const fotos = s ? s.galeria.filter(Boolean) : [];
+---
+
+{
+  s && (
+    <section id={Astro.props.id} class="galeria banda-rosa">
+      <div class="seccion contenedor !pb-14 md:!pb-20">
+        <div class="flex flex-col gap-8 lg:flex-row lg:items-end lg:justify-between">
+          <Titular antetitulo={s.antetitulo} titulo={s.titulo} texto={s.texto} class="!mb-0" />
+          {s.cta && <p class="shrink-0"><a class="btn" href={s.cta.url} rel={s.cta.url.startsWith('http') ? 'noopener' : undefined} target={s.cta.url.startsWith('http') ? '_blank' : undefined}>{s.cta.texto}</a></p>}
+        </div>
+      </div>
+      {fotos.length > 0 && (
+        <ul class="mosaico">
+          {fotos.map((f, i) => (
+            <li class="mosaico-celda">
+              <Imagen src={f} alt={altGaleria(i)} ancho={800} alto={1000} class="h-full w-full object-cover" />
+            </li>
+          ))}
+        </ul>
+      )}
+    </section>
+  )
+}
+
+<style>
+  .mosaico { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); grid-auto-rows: 44vw; grid-auto-flow: dense; background: var(--c-fondo); }
+  .mosaico-celda { position: relative; overflow: hidden; }
+  .mosaico-celda:nth-child(5n + 1) { grid-row: span 2; }
+  .mosaico-celda :global(img) { transition: transform .6s ease, filter .6s ease; filter: saturate(.9); }
+  .mosaico-celda:hover :global(img) { transform: scale(1.04); filter: saturate(1.05); }
+  @media (min-width: 900px) {
+    .mosaico { grid-template-columns: repeat(4, minmax(0, 1fr)); grid-auto-rows: clamp(14rem, 19vw, 22rem); }
+    .mosaico-celda:nth-child(5n + 1) { grid-row: auto; }
+    .mosaico-celda:nth-child(1), .mosaico-celda:nth-child(6) { grid-row: span 2; }
+    .mosaico-celda:nth-child(4) { grid-column: span 2; }
+  }
+</style>

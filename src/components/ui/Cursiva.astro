@@ -1,0 +1,21 @@
+---
+// Título de revista: la parte tras la primera coma (o, sin coma, la última palabra de un título de tres o más)
+// va en cursiva del color de realce. Solo cambia la forma: el texto es el de site.yaml tal cual.
+interface Props { texto?: string }
+const t = (Astro.props.texto ?? '').trim();
+let antes = t;
+let despues = '';
+const coma = t.indexOf(', ');
+if (coma > 0 && coma < t.length - 2) {
+  antes = t.slice(0, coma + 1);
+  despues = t.slice(coma + 2);
+} else {
+  const palabras = t.split(/\s+/);
+  if (palabras.length >= 3) {
+    despues = palabras.pop() as string;
+    antes = palabras.join(' ');
+  }
+}
+---
+
+{antes}{despues && <>{' '}<em class="cursiva">{despues}</em></>}

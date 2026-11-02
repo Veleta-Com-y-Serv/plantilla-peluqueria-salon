@@ -1,0 +1,92 @@
+# Metadatos de la plantilla para el catálogo de NoExpertise.
+id: peluqueria-salon
+nombre: Peluquería y salón
+descripcion: "Web chic de revista en negro, rosa empolvado y dorado para peluquerías, salones de belleza y coloristas."
+sectores:
+  - { id: peluqueria, nombre: Peluquería }
+  - { id: salon-belleza, nombre: Salón de belleza }
+  - { id: colorista, nombre: Colorista }
+  - { id: unas, nombre: Uñas }
+  - { id: maquillaje, nombre: Maquillaje }
+secciones:
+  - { id: hero, nombre: Portada }
+  - { id: servicios, nombre: Servicios y precios }
+  - { id: equipo, nombre: Equipo }
+  - { id: galeria, nombre: Trabajos }
+  - { id: productos, nombre: Marcas que usamos }
+  - { id: ofertas, nombre: Promociones }
+  - { id: opiniones, nombre: Opiniones }
+  - { id: preguntas, nombre: Preguntas frecuentes }
+  - { id: reserva, nombre: Reserva }
+  - { id: contacto, nombre: Contacto }
+estilo: chic
+plan_minimo: gratis
+version: 1.0.0
+base: astrowind
+demo_url: https://demo-plantilla-peluqueria-salon.noexpertise.com
+activa: true
+orden: 510
+
+# Asistente de puesta en marcha (NoExpertise): un paso por pantalla. Rutas del site sin índices;
+# tipos: texto y lista (la IA propone), datos, fotos, eleccion (colores y logo) y repaso.
+asistente:
+  - id: negocio
+    titulo: "Tu salón"
+    pregunta: "¿Cómo se llama tu peluquería o salón y qué hacéis? Corte, color, peinados, uñas, maquillaje… y qué os distingue."
+    ayuda: "Con dos frases basta: lo afinamos juntos en los pasos siguientes."
+    tipo: texto
+    campos: [nombre, eslogan, seo.titulo, seo.descripcion, secciones.hero.antetitulo, secciones.hero.titulo, secciones.hero.texto, secciones.hero.items]
+  - id: contacto
+    titulo: "Cómo te encuentran"
+    pregunta: "¿Dónde está el salón y cómo os pueden llamar o escribir? Dime también el horario."
+    ayuda: "Solo lo que quieras que vean tus clientas y clientes. Lo que dejes vacío no sale en tu web."
+    tipo: datos
+    campos: [contacto.telefono, contacto.whatsapp, contacto.email, contacto.direccion, contacto.horario, redes.instagram, redes.facebook]
+  - id: servicios
+    titulo: "Servicios y precios"
+    pregunta: "¿Qué servicios ofrecéis? Uno por línea, con el precio y la duración si quieres (corte y peinado, balayage, recogido, manicura…)."
+    ayuda: "Si no quieres poner precios, déjalos en blanco: no salen."
+    tipo: lista
+    campos: [secciones.servicios.servicios]
+  - id: equipo
+    titulo: "El equipo"
+    pregunta: "¿Quién trabaja en el salón? Nombre, qué hace y su especialidad, uno por línea."
+    ayuda: "Las fotos las pones luego en Contenido. Sus nombres salen también en el formulario de reserva."
+    tipo: lista
+    campos: [secciones.equipo.personas]
+  - id: productos
+    titulo: "Marcas que usáis"
+    pregunta: "¿Con qué marcas trabajáis o cuáles vendéis en el salón? Dime cada una y qué es (tintes, champús, esmaltes…)."
+    tipo: texto
+    campos: [secciones.productos.titulo, secciones.productos.texto, secciones.productos.items]
+  - id: ofertas
+    titulo: "Promociones"
+    pregunta: "¿Tenéis alguna promoción ahora? Cuéntame en qué consiste, el precio y hasta cuándo vale."
+    ayuda: "Si no tienes ninguna, sáltalo: el apartado se puede ocultar."
+    tipo: lista
+    campos: [secciones.ofertas.ofertas]
+  - id: preguntas
+    titulo: "Preguntas frecuentes"
+    pregunta: "¿Qué os preguntan siempre? Si hace falta cita, cuánto tarda un color, si peináis a domicilio… Escribe la pregunta y lo que respondéis."
+    ayuda: "Si lo prefieres, añádelas luego en Contenido."
+    tipo: lista
+    campos: [secciones.preguntas.preguntas]
+  - id: reserva
+    titulo: "Reservas"
+    pregunta: "¿Cómo se reserva cita con vosotros? En qué franjas atendéis, si pedís señal y cómo confirmáis la hora."
+    tipo: texto
+    campos: [secciones.reserva.titulo, secciones.reserva.texto, secciones.reserva.items, secciones.reserva.nota, secciones.reserva.franjas]
+  - id: fotos
+    titulo: "Tus fotos"
+    pregunta: "Pon una foto de portada del salón y tus mejores trabajos."
+    ayuda: "Sube las tuyas o elige una del banco. Las que no cambies se quedan como están."
+    tipo: fotos
+    campos: [secciones.hero.imagen, secciones.servicios.imagen, secciones.galeria.galeria, secciones.reserva.imagen]
+  - id: aspecto
+    titulo: "Colores y logo"
+    pregunta: "Elige los colores de tu web y, si tienes, tu logo."
+    tipo: eleccion
+    campos: [colores.primario, colores.acento, logo]
+  - id: repaso
+    titulo: "Repaso"
+    tipo: repaso

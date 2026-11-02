@@ -1,0 +1,17 @@
+---
+// Página de error con el diseño de la plantilla: banda negra con marco dorado, «404» enorme en serif cursiva rosa.
+import Base from '../layouts/Base.astro';
+---
+
+<Base titulo="Página no encontrada">
+  <section class="banda-negra relative flex min-h-[78svh] flex-col">
+    <div class="pointer-events-none absolute inset-3 border border-[color-mix(in_srgb,var(--oro)_65%,transparent)] md:inset-5" aria-hidden="true"></div>
+    <div class="contenedor flex flex-1 flex-col items-center justify-center py-16 text-center">
+      <p class="antetitulo">Error 404</p>
+      <p class="mt-4 font-display text-[clamp(7rem,34vw,17rem)] leading-[.85] italic text-[var(--c-primario)]" aria-hidden="true">404</p>
+      <h1 class="titulo-seccion mt-6">Esta página <em class="cursiva">no existe</em></h1>
+      <p class="mt-5 max-w-xl text-lg opacity-80">Puede que el enlace esté mal o que la página se haya movido.</p>
+      <p class="mt-10"><a class="btn" href="/">Volver al inicio</a></p>
+    </div>
+  </section>
+</Base>

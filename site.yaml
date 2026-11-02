@@ -1,0 +1,169 @@
+# Contenido de la web. Es lo único que rellena la plataforma NoExpertise.
+# Una sola página: el menú apunta a anclas (#id-de-sección).
+# Las secciones se muestran en el orden de este fichero. Para ocultar una: activa: false.
+# Apartado nuevo: un id propio (es su ancla, /#id) con `tipo:` = el diseño de otra sección o `texto`.
+# Listas planas: nunca una lista dentro de un elemento de lista. Precios siempre entre comillas.
+nombre: Salón Alcazaba
+eslogan: Peluquería, color y belleza en el centro de Badajoz.
+sector: peluqueria
+logo: ""          # ruta a una imagen en public/ (p. ej. /logo.svg). Vacío = nombre en letra de revista.
+colores:
+  primario: "#e2b4ad"   # rosa empolvado: bandas de color (trabajos, opiniones, formulario de reserva)
+  acento: "#c19a5b"     # dorado: botones, filetes, antetítulos y marcos de las fotos
+  fondo: "#0d0b0b"      # negro: tema oscuro por defecto (con fondo claro el diseño también funciona)
+  texto: "#f7eeea"      # marfil rosado: letra sobre negro y fondo de las bandas claras
+contacto:
+  telefono: "924 61 38 07"
+  email: hola@salonalcazaba.es
+  direccion: Calle Menacho 21, 06001 Badajoz
+  horario: "Martes a viernes, de 9:30 a 20:00. Sábados, de 9:00 a 14:30."
+  whatsapp: "+34 655 21 47 90"
+redes:
+  instagram: https://www.instagram.com/
+  facebook: https://www.facebook.com/
+  linkedin: ""
+menu:
+  - { texto: Servicios, url: "/#servicios" }
+  - { texto: Equipo, url: "/#equipo" }
+  - { texto: Trabajos, url: "/#galeria" }
+  - { texto: Promociones, url: "/#ofertas" }
+  - { texto: Contacto, url: "/#contacto" }
+boton_cabecera: { texto: Reserva tu cita, url: "/#reserva" }
+seo:
+  titulo: Salón Alcazaba · Peluquería y salón de belleza en Badajoz
+  descripcion: "Corte, color, mechas, peinados de evento, uñas y maquillaje en el centro de Badajoz. Estilistas con oficio y reserva por WhatsApp."
+  tipo: HairSalon
+marca_pie: true
+
+secciones:
+  hero:
+    activa: true
+    antetitulo: Peluquería y salón en Badajoz
+    titulo: Tu pelo, con firma propia
+    texto: "Corte, color y peinado a la medida de tu cara y de tu día a día. Un salón tranquilo en pleno centro, con estilistas que te escuchan antes de coger las tijeras."
+    imagen: /fotos/hero.jpg
+    cta: { texto: Reserva tu cita, url: "/#reserva" }
+    cta_secundario: { texto: Ver servicios, url: "/#servicios" }
+    items:
+      - { titulo: Diagnóstico de cabello gratis, icono: gota }
+      - { titulo: Color sin amoniaco, icono: hoja }
+      - { titulo: Abrimos los sábados, icono: calendario }
+
+  servicios:
+    activa: true
+    antetitulo: Carta de servicios
+    titulo: Lo que hacemos en el salón
+    texto: "Precios orientativos: el color y los tratamientos dependen del largo y de cómo esté tu pelo. Te lo decimos antes de empezar."
+    imagen: /fotos/servicios.jpg
+    nota: "Precios con IVA incluido. El diagnóstico y la prueba de color son gratis."
+    cta: { texto: Reserva tu cita, url: "/#reserva" }
+    servicios:
+      - { nombre: Corte y peinado, texto: "Lavado, corte a tijera y secado con forma.", precio: "28 €", duracion: 45 min, categoria: Corte, destacado: false }
+      - { nombre: Corte de flequillo, texto: "Entre corte y corte, para que no te tape los ojos.", precio: "8 €", duracion: 15 min, categoria: Corte, destacado: false }
+      - { nombre: Corte infantil, texto: "Hasta 12 años, con paciencia y sin prisas.", precio: "14 €", duracion: 30 min, categoria: Corte, destacado: false }
+      - { nombre: Tinte de raíz, texto: "Color sin amoniaco en la raíz y brillo en largos.", precio: "38 €", duracion: 1 h 15 min, categoria: Color, destacado: false }
+      - { nombre: Balayage, texto: "Mechas pintadas a mano para un aclarado natural.", precio: "desde 95 €", duracion: 3 h, categoria: Color, destacado: true }
+      - { nombre: Mechas babylights, texto: "Mechas muy finas que dan luz sin que se note el cambio.", precio: "desde 80 €", duracion: 2 h 30 min, categoria: Color, destacado: false }
+      - { nombre: Matiz y brillo, texto: "Quita el tono amarillo o cobrizo y devuelve el brillo.", precio: "22 €", duracion: 30 min, categoria: Color, destacado: false }
+      - { nombre: Peinado de evento, texto: "Recogido, semirrecogido u ondas para bodas y fiestas.", precio: "desde 45 €", duracion: 1 h, categoria: Peinado, destacado: true }
+      - { nombre: Ondas al agua, texto: "Secado con forma y ondas marcadas con tenacilla.", precio: "25 €", duracion: 40 min, categoria: Peinado, destacado: false }
+      - { nombre: Prueba de novia, texto: "Probamos peinado y maquillaje semanas antes del día.", precio: "60 €", duracion: 1 h 30 min, categoria: Peinado, destacado: false }
+      - { nombre: Alisado de keratina, texto: "Menos encrespado y secados más rápidos durante meses.", precio: "desde 120 €", duracion: 2 h 30 min, categoria: Tratamiento, destacado: false }
+      - { nombre: Ritual de hidratación, texto: "Mascarilla, masaje craneal y sellado del cabello.", precio: "30 €", duracion: 40 min, categoria: Tratamiento, destacado: false }
+      - { nombre: Manicura semipermanente, texto: "Limado, cutículas y esmalte que dura dos o tres semanas.", precio: "22 €", duracion: 45 min, categoria: Tratamiento, destacado: false }
+      - { nombre: Maquillaje de evento, texto: "Piel cuidada, larga duración y acabado natural.", precio: "40 €", duracion: 50 min, categoria: Tratamiento, destacado: false }
+
+  equipo:
+    activa: true
+    antetitulo: El equipo
+    titulo: Manos que saben lo que hacen
+    texto: "Cada estilista tiene su especialidad. Al reservar puedes elegir con quién o dejar que te asignemos."
+    personas:
+      - { nombre: Lucía Morcillo, cargo: Directora y estilista, especialidad: "Corte, bob y pelo corto", foto: /placeholders/persona.svg, texto: "Abrió el salón y sigue cortando cada día. Mira cómo cae tu pelo antes de decidir." }
+      - { nombre: Inés Galván, cargo: Colorista, especialidad: "Balayage, rubios y corrección de color", foto: /placeholders/persona.svg, texto: "Mezcla cada color a mano y te explica cómo cuidarlo en casa." }
+      - { nombre: Marta Silveira, cargo: Peinados y novias, especialidad: "Recogidos, ondas y pruebas de novia", foto: /placeholders/persona.svg, texto: "Peina bodas, comuniones y fiestas. Hace la prueba con calma y con fotos." }
+      - { nombre: Carmen Rebollo, cargo: Uñas y maquillaje, especialidad: "Manicura, semipermanente y maquillaje", foto: /placeholders/persona.svg, texto: "Se encarga de que manos y cara acompañen al peinado." }
+
+  galeria:
+    activa: true
+    antetitulo: Trabajos
+    titulo: Recién salidas del salón
+    texto: "Una muestra de cortes, colores y peinados de las últimas semanas."
+    cta: { texto: Más trabajos en Instagram, url: "https://www.instagram.com/" }
+    galeria:
+      - /fotos/trabajo-balayage.jpg
+      - /fotos/trabajo-corte.jpg
+      - /fotos/trabajo-recogido.jpg
+      - /fotos/trabajo-tocador.jpg
+      - /fotos/trabajo-ondas.jpg
+      - /fotos/trabajo-unas.jpg
+      - /fotos/trabajo-color.jpg
+      - /fotos/trabajo-lavacabezas.jpg
+
+  productos:
+    activa: true
+    antetitulo: Marcas que usamos
+    titulo: Lo que te ponemos, también te lo llevas
+    texto: "Trabajamos con marcas profesionales y te recomendamos solo lo que tu pelo necesita. Pregunta en el mostrador."
+    items:
+      - { titulo: Aurea Color, texto: Tintes sin amoniaco }
+      - { titulo: Botánica Pro, texto: Champús sin sulfatos }
+      - { titulo: Nácar, texto: Mascarillas y aceites }
+      - { titulo: Lino y Sal, texto: Fijación y textura }
+      - { titulo: Pétalo, texto: Esmaltes y cuidado de uñas }
+
+  ofertas:
+    activa: true
+    antetitulo: Promociones
+    titulo: Este mes en el salón
+    texto: "Promociones de temporada. Pregunta al reservar: se pueden combinar con el bono de fidelidad."
+    ofertas:
+      - { titulo: Martes de color, texto: "Tinte de raíz y ritual de hidratación los martes por la mañana.", precio: "52 €", validez: Hasta el 30 de noviembre }
+      - { titulo: Novias del próximo año, texto: "Reserva tu fecha y te regalamos la prueba de maquillaje.", precio: "Prueba gratis", validez: Bodas de 2027 }
+      - { titulo: Trae a una amiga, texto: "Si venís juntas a cortar, el segundo corte va a mitad de precio.", precio: "-50 %", validez: Todo el año }
+
+  opiniones:
+    activa: true
+    antetitulo: Opiniones
+    titulo: Lo que dicen al salir
+    testimonios:
+      - { texto: "Llevaba años sin atreverme con el balayage e Inés me lo explicó todo con paciencia. El color ha quedado precioso y natural.", autor: Raquel M., nota: Balayage }
+      - { texto: "Marta me peinó para la boda de mi hermana y aguantó perfecto hasta la madrugada. La prueba previa me dio mucha tranquilidad.", autor: Elena S., nota: Peinado de evento }
+      - { texto: "Salón tranquilo, puntual y con gusto. Lucía es la única que ha sabido cortarme el pelo corto como yo quería.", autor: Pilar G., nota: Corte }
+
+  preguntas:
+    activa: true
+    antetitulo: Preguntas frecuentes
+    titulo: Antes de venir
+    texto: "Si tu duda no está aquí, escríbenos por WhatsApp y te contestamos enseguida."
+    preguntas:
+      - { pregunta: "¿Hace falta reservar cita?", respuesta: "Es lo mejor, sobre todo para color y sábados. Si pasas sin cita y hay hueco, te atendemos encantadas." }
+      - { pregunta: "¿Cuánto tarda un balayage?", respuesta: "Entre dos horas y media y tres, según el largo y el punto de partida. Te lo confirmamos en el diagnóstico gratis." }
+      - { pregunta: "¿Hacéis prueba de color antes del tinte?", respuesta: "Sí, y es gratis. Si es tu primera vez con nosotras, ven 48 horas antes para la prueba de tolerancia." }
+      - { pregunta: "¿Peináis a domicilio para bodas?", respuesta: "Sí, para novias y acompañantes en Badajoz y alrededores. Pregúntanos disponibilidad y desplazamiento." }
+      - { pregunta: "¿Qué pasa si no puedo ir a mi cita?", respuesta: "Avísanos con 24 horas por teléfono o WhatsApp y la cambiamos sin problema." }
+
+  reserva:
+    activa: true
+    antetitulo: Reserva
+    titulo: Pide tu cita
+    texto: "Dinos qué te quieres hacer, con quién y cuándo te viene bien. Te confirmamos la hora por teléfono o WhatsApp en el mismo día."
+    imagen: /fotos/reserva.jpg
+    nota: "Sin señal ni pago por adelantado. Si tienes que cambiarla, avísanos con 24 horas."
+    boton_formulario: Pedir mi cita
+    franjas: "Mañana (9:30 a 14:00); Mediodía (14:00 a 16:00); Tarde (16:00 a 20:00); Sábado por la mañana"
+    items:
+      - { titulo: Elige el servicio, texto: "Si no lo tienes claro, pide un diagnóstico gratis." }
+      - { titulo: Elige estilista, texto: "O deja que te asignemos según lo que quieras hacerte." }
+      - { titulo: Te confirmamos, texto: "Te llamamos o escribimos con la hora exacta." }
+
+  contacto:
+    activa: true
+    antetitulo: Contacto
+    titulo: Te esperamos en Menacho
+    texto: "En la calle peatonal de Menacho, a dos minutos de la plaza de España. Hay aparcamiento público a la vuelta de la esquina."
+    boton_formulario: Enviar mensaje
+    horario:
+      - { dia: Martes a viernes, horas: "9:30 a 20:00" }
+      - { dia: Sábado, horas: "9:00 a 14:30" }
+      - { dia: Domingo y lunes, horas: Cerrado }

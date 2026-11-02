@@ -1,0 +1,79 @@
+---
+// Contacto sobre banda marfil, de borde a borde. A la izquierda: titular, el teléfono enorme en serif cursiva, tres
+// datos en fila (WhatsApp, email y dirección con enlace al mapa) y el horario como una carta de días y horas
+// (`horario: [{dia, horas}]` de la sección; si no hay, site.yaml → contacto.horario). A la derecha, tras un filete
+// dorado vertical, un formulario corto de campos subrayados (nombre, teléfono, email, servicio y mensaje) que abre
+// el correo. `boton_formulario` opcional. En móvil, todo en una columna.
+import { seccion, site, tel, whatsapp, mapa, campo } from '../../data/site';
+import Titular from '../ui/Titular.astro';
+import Icono from '../ui/Icono.astro';
+import FormularioContacto from '../ui/FormularioContacto.astro';
+interface Props { id: string }
+const { id } = Astro.props;
+const s = seccion(id);
+const c = site.contacto;
+const horario = s ? s.horario.filter((h) => h && h.dia) : [];
+const botonForm = campo(s?.boton_formulario) || undefined;
+---
+
+{
+  s && (
+    <section id={id} class="seccion banda-marfil">
+      <div class="contenedor contacto-rejilla">
+        <div class="min-w-0">
+          <Titular antetitulo={s.antetitulo} titulo={s.titulo} texto={s.texto} class="!mb-10" />
+          {c.telefono && <a class="contacto-telefono" href={tel(c.telefono)}>{c.telefono}</a>}
+          {(c.whatsapp || c.email || c.direccion) && (
+            <ul class="contacto-datos">
+              {c.whatsapp && (
+                <li><a class="contacto-dato" href={whatsapp(c.whatsapp)} rel="noopener" target="_blank"><Icono nombre="whatsapp" tam={20} class="resalte shrink-0" /><span>WhatsApp<br /><span class="opacity-75">{c.whatsapp}</span></span></a></li>
+              )}
+              {c.email && (
+                <li><a class="contacto-dato" href={`mailto:${c.email}`}><Icono nombre="correo" tam={20} class="resalte shrink-0" /><span class="break-all">Email<br /><span class="opacity-75">{c.email}</span></span></a></li>
+              )}
+              {c.direccion && (
+                <li><a class="contacto-dato" href={mapa(c.direccion)} rel="noopener" target="_blank"><Icono nombre="mapa" tam={20} class="resalte shrink-0" /><span>Cómo llegar<br /><span class="opacity-75">{c.direccion}</span></span></a></li>
+              )}
+            </ul>
+          )}
+          {(horario.length > 0 || c.horario) && (
+            <div class="contacto-horario">
+              <p class="etiqueta-mayus resalte">Horario</p>
+              {horario.length > 0 ? (
+                <ul class="mt-3">
+                  {horario.map((h) => (
+                    <li class="horario-fila">
+                      <span class="horario-dia">{h.dia}</span>
+                      <span class="horario-horas">{h.horas}</span>
+                    </li>
+                  ))}
+                </ul>
+              ) : (
+                <p class="mt-3 text-lg">{c.horario}</p>
+              )}
+            </div>
+          )}
+        </div>
+        <div class="contacto-form">
+          <p class="etiqueta-mayus resalte mb-6">Escríbenos</p>
+          <FormularioContacto prefijo={`${id}-f`} boton={botonForm} />
+        </div>
+      </div>
+    </section>
+  )
+}
+
+<style>
+  .contacto-rejilla { display: grid; gap: 3.5rem; }
+  @media (min-width: 1024px) { .contacto-rejilla { grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); gap: 0; } }
+  .contacto-telefono { display: inline-block; font-family: var(--fuente-titulos); font-style: italic; font-size: clamp(2.6rem, 11vw, 5.5rem); line-height: 1; letter-spacing: -0.02em; text-decoration: none; color: var(--resalte); white-space: nowrap; }
+  .contacto-datos { display: grid; gap: 1rem; margin-top: 2.25rem; }
+  @media (min-width: 640px) { .contacto-datos { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1.5rem; } }
+  .contacto-dato { display: flex; align-items: flex-start; gap: .75rem; min-height: 2.75rem; text-decoration: none; font-size: .98rem; line-height: 1.45; }
+  a.contacto-dato:hover { text-decoration: underline; }
+  .contacto-horario { margin-top: 2.75rem; max-width: 36rem; }
+  .horario-fila { display: flex; flex-wrap: wrap; justify-content: space-between; gap: .25rem 1rem; padding-block: .85rem; border-bottom: 1px solid var(--linea); }
+  .horario-dia { font-family: var(--fuente-titulos); font-size: 1.3rem; }
+  .horario-horas { opacity: .8; }
+  @media (min-width: 1024px) { .contacto-form { padding-left: 4rem; margin-left: 4rem; border-left: 1px solid var(--resalte); } }
+</style>

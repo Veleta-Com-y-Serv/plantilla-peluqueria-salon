@@ -1,0 +1,68 @@
+---
+// Cabecera fija a todo el ancho: nombre en serif de revista con un rombo dorado (o el logo), menú
+// (site.yaml → menu) y botón de reserva (site.yaml → boton_cabecera). Sobre la portada es transparente y al bajar
+// se vuelve negra (clase .sobre-hero, la pone el script de abajo; sin JavaScript se queda negra).
+// En móvil, menú plegable sin JavaScript (<details>) a pantalla completa. Aspecto en src/styles/global.css
+// (.cabecera--<variante>). El alto de la cabecera es --alto-cabecera (global.css).
+import { site } from '../data/site';
+import type { Enlace } from '../data/site';
+interface Props { variante?: string; cta?: Enlace | null }
+const { variante = 'revista', cta = null } = Astro.props;
+---
+
+<header class={`cabecera cabecera--${variante}`} id="cabecera">
+  <div class="contenedor cabecera-fila">
+    <a href="/" class="marca" aria-label={`${site.nombre}, inicio`}>
+      {
+        site.logo ? (
+          <img src={site.logo} alt={site.nombre} class="marca-logo" width="160" height="40" />
+        ) : (
+          <>
+            <span class="marca-punto" aria-hidden="true" />
+            <span class="marca-nombre">{site.nombre}</span>
+          </>
+        )
+      }
+    </a>
+    <nav class="cabecera-nav" aria-label="Menú principal">
+      {site.menu.map((e) => <a href={e.url}>{e.texto}</a>)}
+    </nav>
+    {cta && cta.url && <a href={cta.url} class="btn cabecera-cta">{cta.texto}</a>}
+    {
+      (site.menu.length > 0 || (cta && cta.url)) && (
+        <details class="menu-movil">
+          <summary>
+            <span class="menu-movil-icono" aria-hidden="true" />
+            <span>Menú</span>
+          </summary>
+          <nav class="menu-movil-panel" aria-label="Menú">
+            {site.menu.map((e) => <a href={e.url}>{e.texto}</a>)}
+            {cta && cta.url && <a href={cta.url} class="btn">{cta.texto}</a>}
+          </nav>
+        </details>
+      )
+    }
+  </div>
+</header>
+<script is:inline>
+  document.addEventListener('DOMContentLoaded', function () {
+    var c = document.getElementById('cabecera');
+    if (!c) return;
+    var d = c.querySelector('.menu-movil');
+    var hero = document.querySelector('main > .hero:first-child');
+    function pinta() {
+      var arriba = hero && window.scrollY < hero.offsetHeight - c.offsetHeight - 10;
+      c.classList.toggle('sobre-hero', !!arriba && !(d && d.open));
+    }
+    c.style.transition = 'none';
+    pinta();
+    requestAnimationFrame(function () { requestAnimationFrame(function () { c.style.transition = ''; }); });
+    window.addEventListener('scroll', pinta, { passive: true });
+    if (d) {
+      d.addEventListener('toggle', pinta);
+      d.querySelectorAll('a').forEach(function (a) {
+        a.addEventListener('click', function () { d.open = false; });
+      });
+    }
+  });
+</script>

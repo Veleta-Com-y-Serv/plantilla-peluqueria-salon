@@ -1,0 +1,62 @@
+---
+// Preguntas frecuentes sobre banda marfil: en escritorio, titular fijo a la izquierda (se queda al bajar) y, a la
+// derecha, acordeón nativo <details> (sin JavaScript) con la pregunta en serif y un círculo dorado con «+».
+// `preguntas: [{pregunta, respuesta}]`; `imagen` opcional, en franja a sangre encima. Sin preguntas no se pinta.
+// Sirve de diseño para apartados nuevos.
+import { seccion } from '../../data/site';
+import { altSeccion } from '../../lib/seo';
+import Imagen from '../ui/Imagen.astro';
+import Titular from '../ui/Titular.astro';
+interface Props { id: string }
+const s = seccion(Astro.props.id);
+const preguntas = s ? s.preguntas.filter((p) => p && p.pregunta) : [];
+---
+
+{
+  s && preguntas.length > 0 && (
+    <section id={Astro.props.id} class="banda-marfil">
+      {s.imagen && (
+        <div class="faq-franja">
+          <Imagen src={s.imagen} alt={altSeccion(s)} ancho={2100} alto={800} class="h-full w-full object-cover" />
+        </div>
+      )}
+      <div class="seccion contenedor faq-rejilla">
+        <div class="faq-lado">
+          <Titular antetitulo={s.antetitulo} titulo={s.titulo} texto={s.texto} class="!mb-0" />
+        </div>
+        <div class="faq-lista">
+          {preguntas.map((p) => (
+            <details class="faq">
+              <summary>
+                <span class="faq-pregunta">{p.pregunta}</span>
+                <span class="faq-signo" aria-hidden="true" />
+              </summary>
+              {p.respuesta && <p class="faq-respuesta">{p.respuesta}</p>}
+            </details>
+          ))}
+        </div>
+      </div>
+    </section>
+  )
+}
+
+<style>
+  .faq-franja { height: clamp(10rem, 28vw, 24rem); overflow: hidden; }
+  .faq-rejilla { display: grid; gap: 2.75rem; }
+  @media (min-width: 1024px) {
+    .faq-rejilla { grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); gap: 5rem; align-items: start; }
+    .faq-lado { position: sticky; top: calc(var(--alto-cabecera) + 2rem); }
+  }
+  .faq-lista { border-top: 1px solid var(--resalte); }
+  .faq { border-bottom: 1px solid var(--linea); }
+  .faq summary { list-style: none; cursor: pointer; display: flex; align-items: center; justify-content: space-between; gap: 1.25rem; min-height: 3rem; padding-block: 1.4rem; }
+  .faq summary::-webkit-details-marker { display: none; }
+  .faq-pregunta { font-family: var(--fuente-titulos); font-size: clamp(1.3rem, 2.2vw, 1.75rem); line-height: 1.15; }
+  .faq-signo { position: relative; flex-shrink: 0; width: 2.5rem; height: 2.5rem; border: 1px solid var(--resalte); border-radius: 50%; transition: background-color .2s ease; }
+  .faq-signo::before, .faq-signo::after { content: ""; position: absolute; left: 50%; top: 50%; width: .85rem; height: 1px; background: var(--resalte); transform: translate(-50%, -50%); transition: transform .2s ease; }
+  .faq-signo::after { transform: translate(-50%, -50%) rotate(90deg); }
+  .faq[open] .faq-signo { background: var(--resalte); }
+  .faq[open] .faq-signo::before, .faq[open] .faq-signo::after { background: var(--c-texto); }
+  .faq[open] .faq-signo::after { transform: translate(-50%, -50%) rotate(0deg); }
+  .faq-respuesta { padding-bottom: 1.6rem; padding-right: 3.5rem; opacity: .78; }
+</style>

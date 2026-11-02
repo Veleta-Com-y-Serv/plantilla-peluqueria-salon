@@ -1,0 +1,77 @@
+---
+// Reserva: banda partida 50/50 de borde a borde. A la izquierda, la foto (`imagen`) a sangre hasta el borde de la
+// ventana con el marco dorado; a la derecha, sobre rosa: titular, los pasos (`items: [{titulo, texto}]`, numerados
+// en serif cursiva), el formulario de reserva (servicio —de la carta—, estilista —del equipo—, fecha preferida,
+// franja horaria de `franjas` —cadena con «;»— y comentario), que abre el correo, el botón de WhatsApp (sale solo de
+// site.yaml → contacto.whatsapp), `cta` opcional y `nota`. `boton_formulario` opcional. Sin foto, solo la mitad rosa
+// a todo el ancho. En móvil, la foto en franja arriba.
+import { seccion, site, whatsapp, puntos, campo, estilistas } from '../../data/site';
+import { altSeccion } from '../../lib/seo';
+import Imagen from '../ui/Imagen.astro';
+import Titular from '../ui/Titular.astro';
+import Icono from '../ui/Icono.astro';
+import FormularioContacto from '../ui/FormularioContacto.astro';
+interface Props { id: string }
+const { id } = Astro.props;
+const s = seccion(id);
+const pasos = s ? s.items.filter((it) => it && it.titulo) : [];
+const wa = whatsapp(site.contacto.whatsapp, `Hola, quiero pedir cita en ${site.nombre}.`);
+const boton = campo(s?.boton_formulario) || undefined;
+const franjas = puntos(s?.franjas);
+---
+
+{
+  s && (
+    <section id={id} class:list={['reserva', { 'reserva--foto': !!s.imagen }]}>
+      {s.imagen && (
+        <div class="reserva-foto marco">
+          <Imagen src={s.imagen} alt={altSeccion(s)} ancho={1200} alto={1500} class="h-full w-full object-cover" />
+        </div>
+      )}
+      <div class="reserva-cuerpo banda-rosa">
+        <Titular antetitulo={s.antetitulo} titulo={s.titulo} texto={s.texto} class="!mb-0" />
+        {pasos.length > 0 && (
+          <ol class="reserva-pasos">
+            {pasos.map((it, i) => (
+              <li>
+                <span class="reserva-paso-n" aria-hidden="true">{String(i + 1).padStart(2, '0')}</span>
+                <p class="reserva-paso-titulo">{it.titulo}</p>
+                {it.texto && <p class="mt-1 text-[.92rem] opacity-80">{it.texto}</p>}
+              </li>
+            ))}
+          </ol>
+        )}
+        <FormularioContacto prefijo={`${id}-f`} boton={boton} reserva estilistas={estilistas()} franjas={franjas} class="mt-10" />
+        {(wa || s.cta) && (
+          <div class="mt-8 flex flex-wrap gap-3">
+            {wa && (
+              <a class="btn-sec" href={wa} rel="noopener" target="_blank">
+                <Icono nombre="whatsapp" tam={18} />
+                Reservar por WhatsApp
+              </a>
+            )}
+            {s.cta && <a class="btn-sec" href={s.cta.url}>{s.cta.texto}</a>}
+          </div>
+        )}
+        {s.nota && <p class="mt-6 text-sm opacity-80">{s.nota}</p>}
+      </div>
+    </section>
+  )
+}
+
+<style>
+  .reserva { display: grid; grid-template-columns: minmax(0, 1fr); }
+  .reserva-foto { height: 70vw; max-height: 30rem; }
+  .reserva-cuerpo { padding: var(--ritmo) 1rem; }
+  .reserva-pasos { display: grid; gap: 1.5rem; margin-top: 2.5rem; padding-block: 1.75rem; border-block: 1px solid color-mix(in srgb, currentColor 28%, transparent); }
+  @media (min-width: 640px) { .reserva-pasos { grid-template-columns: repeat(auto-fit, minmax(10rem, 1fr)); gap: 2rem; } }
+  .reserva-paso-n { display: block; font-family: var(--fuente-titulos); font-style: italic; font-size: 2.25rem; line-height: 1; color: var(--resalte); }
+  .reserva-paso-titulo { margin-top: .5rem; font-size: .74rem; font-weight: 700; letter-spacing: .22em; text-transform: uppercase; }
+  @media (min-width: 768px) { .reserva-cuerpo { padding: var(--ritmo-md) 2rem; } }
+  @media (min-width: 1024px) {
+    .reserva--foto { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); }
+    .reserva-foto { height: auto; max-height: none; min-height: 100%; }
+    .reserva--foto .reserva-cuerpo { padding-left: 4.5rem; padding-right: max(2rem, calc((100vw - var(--ancho)) / 2 + 2rem)); }
+    .reserva:not(.reserva--foto) .reserva-cuerpo { padding-inline: max(2rem, calc((100vw - 64rem) / 2)); }
+  }
+</style>

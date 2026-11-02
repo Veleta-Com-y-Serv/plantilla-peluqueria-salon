@@ -1,0 +1,103 @@
+---
+// Pie carbón a todo el ancho: arriba, el eslogan y el botón de reserva; en medio, cuatro columnas (contacto,
+// horario, menú y redes); abajo, el nombre enorme en serif de revista como una cabecera de portada.
+// El horario sale de la lista `horario` de la sección de contacto si la hay; si no, de site.yaml → contacto.horario.
+// «Web creada con NoExpertise» se muestra si site.yaml → marca_pie no es false.
+import { site, tel, mapa, whatsapp } from '../data/site';
+import Icono from './ui/Icono.astro';
+interface Props { variante?: string }
+const { variante = 'revista' } = Astro.props;
+const c = site.contacto;
+const redes = Object.entries(site.redes).filter(([, url]) => url);
+const horario = (site.secciones.contacto?.activa && site.secciones.contacto.horario.filter((h) => h && h.dia)) || [];
+const cta = site.boton_cabecera;
+const anio = new Date().getFullYear();
+---
+
+<footer class={`pie pie--${variante} banda-carbon`}>
+  <div class="contenedor pt-16 md:pt-24">
+    {(site.eslogan || (cta && cta.url)) && (
+      <div class="flex flex-col gap-6 pb-12 md:flex-row md:items-center md:justify-between">
+        {site.eslogan && <p class="pie-eslogan-grande">{site.eslogan}</p>}
+        {cta && cta.url && <p class="shrink-0"><a class="btn" href={cta.url}>{cta.texto}</a></p>}
+      </div>
+    )}
+    <div class="grid gap-10 border-t border-[color-mix(in_srgb,var(--oro)_40%,transparent)] py-12 sm:grid-cols-2 lg:grid-cols-4">
+      {
+        (c.telefono || c.whatsapp || c.email || c.direccion) && (
+          <div>
+            <p class="pie-titulo">Contacto</p>
+            <ul class="pie-lista">
+              {c.telefono && <li><a href={tel(c.telefono)}>{c.telefono}</a></li>}
+              {c.whatsapp && <li><a href={whatsapp(c.whatsapp)} rel="noopener" target="_blank">WhatsApp</a></li>}
+              {c.email && <li><a class="break-all" href={`mailto:${c.email}`}>{c.email}</a></li>}
+              {c.direccion && <li><a href={mapa(c.direccion)} rel="noopener" target="_blank">{c.direccion}</a></li>}
+            </ul>
+          </div>
+        )
+      }
+      {
+        (horario.length > 0 || c.horario) && (
+          <div>
+            <p class="pie-titulo">Horario</p>
+            {horario.length > 0 ? (
+              <ul class="pie-lista">
+                {horario.map((h) => <li><span class="font-semibold">{h.dia}</span>{h.horas && <><br /><span class="opacity-75">{h.horas}</span></>}</li>)}
+              </ul>
+            ) : (
+              <p class="opacity-85">{c.horario}</p>
+            )}
+          </div>
+        )
+      }
+      {
+        site.menu.length > 0 && (
+          <div>
+            <p class="pie-titulo">En esta web</p>
+            <ul class="pie-lista">
+              {site.menu.map((e) => <li><a href={e.url}>{e.texto}</a></li>)}
+            </ul>
+          </div>
+        )
+      }
+      {
+        redes.length > 0 && (
+          <div>
+            <p class="pie-titulo">Síguenos</p>
+            <ul class="pie-redes !mt-0">
+              {redes.map(([red, url]) => (
+                <li>
+                  <a href={url} rel="noopener" target="_blank" aria-label={red} class="pie-red">
+                    <Icono nombre={red} tam={20} />
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
+        )
+      }
+    </div>
+  </div>
+  <p class="pie-nombre contenedor" aria-hidden="true">{site.nombre}</p>
+  <div class="contenedor">
+    <div class="pie-legal !mt-0">
+      <span>© {anio} {site.nombre}</span>
+      <a href="/aviso-legal">Aviso legal y privacidad</a>
+      {
+        site.marca_pie && (
+          <span class="pie-noexpertise">
+            Web creada con <a href="https://noexpertise.com" rel="noopener">NoExpertise</a>
+          </span>
+        )
+      }
+    </div>
+  </div>
+</footer>
+
+<style>
+  .pie-eslogan-grande { max-width: 40rem; font-family: var(--fuente-titulos); font-style: italic; font-size: clamp(1.6rem, 3.2vw, 2.4rem); line-height: 1.15; }
+  .pie-lista a { display: inline-block; padding-block: .3rem; }
+  .pie-red { display: grid !important; place-items: center; width: 2.75rem; height: 2.75rem; border: 1px solid color-mix(in srgb, var(--oro) 45%, transparent); border-radius: 50%; padding: 0 !important; }
+  .pie-red:hover { border-color: var(--oro); color: var(--oro); }
+  .pie-nombre { padding-block: 1rem 1.5rem; color: color-mix(in srgb, var(--c-texto) 88%, var(--c-primario)); overflow-wrap: anywhere; }
+</style>

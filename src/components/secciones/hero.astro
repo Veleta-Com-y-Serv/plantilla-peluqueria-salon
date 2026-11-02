@@ -1,0 +1,79 @@
+---
+// Portada a pantalla completa, como la portada de una revista: la foto (`imagen`) a sangre de borde a borde con un
+// velo negro, un marco dorado fino por dentro y, centrados, antetítulo, titular enorme en serif fina (la parte tras
+// la coma en cursiva y en rosa), `texto` y los dos botones (`cta`, `cta_secundario`). Abajo, dentro del marco, los
+// `items` ({titulo, icono}) separados por rombos dorados. Sin foto, fondo negro con un halo rosa. Sin items, no hay fila.
+import { seccion } from '../../data/site';
+import { altHero } from '../../lib/seo';
+import Imagen from '../ui/Imagen.astro';
+import Icono from '../ui/Icono.astro';
+import Cursiva from '../ui/Cursiva.astro';
+interface Props { id: string; primera?: boolean }
+const { id, primera = false } = Astro.props;
+const s = seccion(id);
+---
+
+{
+  s && (
+    <section id={id} class:list={['hero banda-negra', { 'hero--sin-foto': !s.imagen }]}>
+      {s.imagen && (
+        <div class="hero-foto">
+          <Imagen src={s.imagen} alt={altHero()} ancho={2400} alto={1350} prioridad={primera} class="h-full w-full object-cover" />
+        </div>
+      )}
+      <div class="hero-marco" aria-hidden="true" />
+      <div class="hero-cuerpo">
+        {s.antetitulo && <p class="antetitulo hero-ante">{s.antetitulo}</p>}
+        {s.titulo && <h1 class="hero-titulo"><Cursiva texto={s.titulo} /></h1>}
+        {s.texto && <p class="hero-parrafo">{s.texto}</p>}
+        {(s.cta || s.cta_secundario) && (
+          <div class="hero-botones">
+            {s.cta && <a class="btn" href={s.cta.url}>{s.cta.texto}</a>}
+            {s.cta_secundario && <a class="btn-sec" href={s.cta_secundario.url}>{s.cta_secundario.texto}</a>}
+          </div>
+        )}
+      </div>
+      {s.items.length > 0 && (
+        <ul class="hero-items">
+          {s.items.map((it) => (
+            <li class="hero-item">
+              {it.icono && <Icono nombre={it.icono} tam={18} class="shrink-0 resalte" />}
+              <span>{it.titulo}</span>
+            </li>
+          ))}
+        </ul>
+      )}
+    </section>
+  )
+}
+
+<style>
+  .hero { position: relative; isolation: isolate; display: flex; flex-direction: column; min-height: 100svh; padding: calc(var(--alto-cabecera) + 2.5rem) 1rem 2rem; overflow: hidden; }
+  .hero-foto { position: absolute; inset: 0; z-index: -2; background: var(--c-fondo); }
+  .hero-foto::after { content: ""; position: absolute; inset: 0; background:
+      linear-gradient(180deg, color-mix(in srgb, var(--c-fondo) 72%, transparent) 0%, color-mix(in srgb, var(--c-fondo) 35%, transparent) 30%, color-mix(in srgb, var(--c-fondo) 50%, transparent) 62%, color-mix(in srgb, var(--c-fondo) 94%, transparent) 100%); }
+  .hero--sin-foto { background: radial-gradient(60rem 40rem at 50% 30%, color-mix(in srgb, var(--c-primario) 26%, var(--c-fondo)) 0%, var(--c-fondo) 70%); }
+  .hero-marco { position: absolute; z-index: -1; inset: calc(var(--alto-cabecera) + .5rem) .6rem .6rem; border: 1px solid color-mix(in srgb, var(--oro) 70%, transparent); pointer-events: none; }
+  .hero-cuerpo { flex: 1; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; width: 100%; max-width: 80rem; margin-inline: auto; padding-block: 1.5rem; }
+  .hero-ante { justify-content: center; }
+  .hero-ante::after { content: ""; flex: 0 0 3rem; height: 1px; background: currentColor; }
+  .hero-titulo { margin-top: 1.4rem; font-size: clamp(2.7rem, 12.5vw, 4.25rem); line-height: .95; letter-spacing: -0.025em; overflow-wrap: break-word; }
+  .hero-titulo :global(.cursiva) { display: block; color: var(--c-primario); }
+  .hero-parrafo { margin-top: 1.6rem; max-width: 38rem; font-size: 1.1rem; opacity: .9; }
+  .hero-botones { margin-top: 2.25rem; display: flex; flex-direction: column; gap: .75rem; width: 100%; max-width: 22rem; }
+  .hero-items { display: flex; flex-direction: column; align-items: center; gap: .55rem; padding: 1rem .5rem .25rem; font-size: .68rem; font-weight: 600; letter-spacing: .24em; text-transform: uppercase; text-align: center; }
+  .hero-item { display: inline-flex; align-items: center; gap: .6rem; }
+  @media (min-width: 640px) {
+    .hero-botones { flex-direction: row; justify-content: center; width: auto; max-width: none; }
+  }
+  @media (min-width: 768px) {
+    .hero { padding: calc(var(--alto-cabecera) + 3rem) 2.5rem 2.25rem; }
+    .hero-marco { inset: calc(var(--alto-cabecera) + 1rem) 1.25rem 1.25rem; }
+    .hero-titulo { font-size: clamp(4.5rem, 10vw, 7rem); }
+    .hero-items { flex-direction: row; justify-content: center; gap: 0; }
+    .hero-item + .hero-item::before { content: ""; width: .4rem; height: .4rem; margin-inline: 1.6rem; background: var(--oro); transform: rotate(45deg); }
+  }
+  @media (min-width: 1280px) {
+    .hero-titulo { font-size: clamp(6rem, 7.6vw, 8.5rem); }
+  }
+</style>
