@@ -7,6 +7,7 @@ Web chic de revista en negro, rosa empolvado y dorado para peluquerías, salones
 - Campos propios: `servicios[]` (nombre, texto, precio, duracion, categoria «Corte|Color|Peinado|Tratamiento», destacado), `personas[].especialidad` (cadena), `productos.items[]` (titulo = marca, texto = qué es), `ofertas[]` (titulo, texto, precio, validez), `testimonios[]` (texto, autor, nota), `reserva.franjas` (franjas horarias con «;»), `boton_formulario` en reserva y contacto, `contacto.horario[]` (dia, horas).
 - El formulario de reserva saca el servicio de la carta y la estilista del equipo.
 - SEO de base incluido (`src/lib/seo.ts`): canónica, og:image, JSON-LD del negocio (`HairSalon`) y de las preguntas frecuentes, `robots.txt`, `sitemap.xml` y `llms.txt`; `noindex` si `seo.indexable: false`.
+- Varias páginas (opcional, `paginas:` en la raíz de `site.yaml`): Inicio + una página por entrada (`{ ruta, titulo, secciones: "a; b" }`, hasta 6) con el menú hecho solo; reparto recomendado en `template.yaml → paginas`. Sin la clave, una sola página larga.
 - Contenido editable en `site.yaml`; metadatos y guion del asistente en `template.yaml`; reglas para el agente en `CLAUDE.md`; brief de diseño en `DISEÑO.md`; fotos a generar en `fotos.json` (respaldos en `public/placeholders/`).
 
 ```
